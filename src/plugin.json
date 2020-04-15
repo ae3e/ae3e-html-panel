@@ -1,0 +1,28 @@
+{
+  "type": "panel",
+  "name": "Html panel",
+  "id": "ae3e-html-panel",
+
+  "info": {
+    "description": "Render any html content with data",
+    "author": {
+      "name": "AE3E"
+    },
+    "keywords": ["Html"],
+    "logos": {
+      "small": "img/html.svg",
+      "large": "img/html.svg"
+    },
+    "links": [
+      {"name": "Website", "url": "https://github.com/ae3e/ae3e-html-panel"}
+    ],
+    "screenshots": [],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+
+  "dependencies": {
+    "grafanaVersion": "6.7.x",
+    "plugins": []
+  }
+}
