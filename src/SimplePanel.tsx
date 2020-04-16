@@ -44,37 +44,48 @@ export class SimplePanel extends PureComponent<Props,State> {
       html: props.options.html,
       htmlNode : React.createRef()
     };
-
     
-
-    this.refresh()
+    f = new Function('ctxt,html',this.props.options.script);
   }
 
   componentDidMount(){
-    const slotHtml = document.createRange().createContextualFragment(this.props.options.html) // Create a 'tiny' document and parse the html string
-    this.state.htmlNode.current.innerHTML = '' // Clear the container
-    this.state.htmlNode.current.appendChild(slotHtml) // Append the new content
+
+    this.updateHTML();
+    this.updateHTMLWithScript();
   }
 
   updateHTML = () => {
+    const slotHtml = document.createRange().createContextualFragment(this.props.options.html) // Create a 'tiny' document and parse the html string
+    this.state.htmlNode.current.innerHTML = '' // Clear the container
+    this.state.htmlNode.current.appendChild(slotHtml) // Append the new content
+    
+  };
+
+  updateHTMLWithScript = () =>{
     try{
-      f(this.props,this.state.htmlNode);
+      f(this.props,this.state.htmlNode.current);
     }catch(e){
       console.log(e)
     }
     
     console.log(this.props)
-  };
-
-  refresh = () => {
-    f = new Function('ctxt,html',this.props.options.script)
-  };
+  }
   
   componentDidUpdate(prevProps: Props) {
     
     // Since any change could be referenced in a template variable,
     // This needs to process everytime (with debounce)
-    this.updateHTML();
+    if (this.props.options.html !== prevProps.options.html) {
+      this.updateHTML();
+    }
+    if (this.props.options.script !== prevProps.options.script) {
+      try{
+        f = new Function('ctxt,html',this.props.options.script)
+      }catch(e){
+        console.log(e)
+      }
+    }
+    this.updateHTMLWithScript();
   }
 
   render() {
