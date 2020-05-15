@@ -1,32 +1,16 @@
 import React, { PureComponent } from 'react';
-import { PanelProps,DataSourceApi  } from '@grafana/data';
-import {getDataSourceSrv } from '@grafana/runtime'
+import { PanelProps  } from '@grafana/data';
+import { getLocationSrv } from '@grafana/runtime'
 import { SimpleOptions } from 'types';
 
 import _ from 'lodash'
 
-//declare plolty as global
 declare global {
   interface Window {
-    updateVariable: any;
+    updateVariables: any;
   }
 }
-
-let dataSource:any = getDataSourceSrv() as unknown as DataSourceApi;
-window.updateVariable=function(varname:string, path:string) {
-  console.log('update variable', varname, path );
-  let v = _.find(dataSource.templateSrv.variables, check => {
-    return check.name === varname;
-  });
-  console.log(v);
-  if(v) {
-    v.variableSrv.setOptionAsCurrent(v, {
-      text: path,
-      value: path,
-    });
-    v.variableSrv.variableUpdated(v, true);
-  }
-}
+window.updateVariables = getLocationSrv().update;
 
 interface Props extends PanelProps<SimpleOptions> {}
 interface State {
@@ -39,7 +23,7 @@ let f = new Function('','return "Error"');
 export class SimplePanel extends PureComponent<Props,State> {
   constructor(props: Props) {
     super(props);
-
+    console.log('HTML Constructor')
     this.state = {
       html: props.options.html,
       htmlNode : React.createRef()
@@ -49,12 +33,14 @@ export class SimplePanel extends PureComponent<Props,State> {
   }
 
   componentDidMount(){
-
+    console.log('Component did mount');
     this.updateHTML();
     this.updateHTMLWithScript();
   }
 
   updateHTML = () => {
+
+    //https://www.npmjs.com/package/dangerously-set-html-content
     const slotHtml = document.createRange().createContextualFragment(this.props.options.html) // Create a 'tiny' document and parse the html string
     this.state.htmlNode.current.innerHTML = '' // Clear the container
     this.state.htmlNode.current.appendChild(slotHtml) // Append the new content
