@@ -17,8 +17,8 @@
       {"name": "Website", "url": "https://github.com/ae3e/ae3e-html-panel"}
     ],
     "screenshots": [],
-    "version": "%VERSION%",
-    "updated": "%TODAY%"
+    "version": "0.2.1",
+    "updated": "2020-07-31"
   },
 
   "dependencies": {
