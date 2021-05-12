@@ -1,6 +1,6 @@
 {
   "name": "ae3e-html-panel",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Grafana Html Panel",
   "scripts": {
     "build": "grafana-toolkit plugin:build",
@@ -11,15 +11,15 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@babel/preset-env": "7.5.5",
-    "@grafana/data": "7.1.1",
-    "@grafana/runtime": "7.1.1",
-    "@grafana/toolkit": "7.1.1",
-    "@grafana/ui": "7.1.1"
-  },
-  "dependencies": {
-    "react-ace": "6.2.2"
+    "@grafana/data": "7.5.5",
+    "@grafana/runtime": "7.5.5",
+    "@grafana/toolkit": "7.5.5",
+    "@grafana/ui": "7.5.5"
   },
   "resolutions": {
     "@babel/preset-env": "7.5.5"
+  },
+  "dependencies": {
+    "react-virtualized-auto-sizer": "^1.0.5"
   }
 }

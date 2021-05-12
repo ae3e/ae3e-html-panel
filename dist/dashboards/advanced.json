@@ -1,0 +1,82 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 5,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 17,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "html": "<div id=\"mymap\" style=\"width:100%; height:100%\">\r\n\r\n</div>\r\n<script type=\"module\">\r\n\r\nimport * as d3 from \"https://unpkg.com/d3-require@1.2.4/src/index.js?module\";\r\n\r\nwindow.d3 = d3;\r\n\r\ninit();\r\n\r\n</script>",
+        "script": "//window.map.updateSize();\nasync function init(){\n\n  let ol = window.ol = await d3.require('openlayers');\n  if (!ol.css) {\n       var l = document.createElement('link');\n       l.setAttribute('rel','stylesheet');\n       l.setAttribute('href','https://openlayers.org/en/v6.1.1/css/ol.css');\n       ol.css = document.head.appendChild(l);\n   }\n\n  let vectorSource = window.vectorSource = new ol.source.Vector({\n    features: null//(new ol.format.GeoJSON()).readFeatures(mps)\n  });\n\n    let image = new ol.style.Circle({\n      radius: 3,\n      fill: null,\n      stroke: new ol.style.Stroke({color: 'red', width: 1})\n    });\n\n  var layers = [\n    new ol.layer.Tile({\n      //extent: [-13884991, 2870341, -7455066, 6338219],\n      source: new ol.source.OSM()\n    }),\n    new ol.layer.Vector({\n      source: vectorSource,\n      style: new ol.style.Style({\n        image: image\n      })\n    })\n  ];\n\n  const map = window.map = new ol.Map({\n    layers: layers,\n    target: html.querySelector('#mymap'),\n    view: new ol.View({\n        center: ol.proj.fromLonLat([0,0]),\n        zoom: 2\n    })\n  });\n  \n  update();\n\n};\nwindow.init = init;\n\nconsole.log(ctxt)\nwindow.update = function(){\nlet geojson = {\n      type: \"FeatureCollection\",\n      features: ctxt.data.series[0].fields[1].values.buffer\n    }\n    console.log(geojson)\nvectorSource.clear()\nvectorSource.addFeatures((new ol.format.GeoJSON({\n    featureProjection:'EPSG:3857'\n})).readFeatures(geojson))\n}\nupdate();"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "request": {
+            "script": "let magnitude = data.features.map(elt=>elt.properties.magnitude)\r\nreturn {\r\n        refId: 0,\r\n        fields: [\r\n          { name: 'Magnitude', values: magnitude, type: 'time' },\r\n          { name: 'Feature', values: data.features, type: 'number' },\r\n        ]\r\n      }",
+            "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=30&starttime={{{function from function='dateFormat'}}}&endtime={{{function to function='dateFormat'}}}&minmagnitude=5"
+          }
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Panel Title",
+      "type": "ae3e-html-panel"
+    }
+  ],
+  "schemaVersion": 25,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "ae3e-html-panel (Advanced)",
+  "uid": "VPCmJcRMk",
+  "version": 31
+}

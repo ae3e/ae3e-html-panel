@@ -17,12 +17,12 @@
       {"name": "Website", "url": "https://github.com/ae3e/ae3e-html-panel"}
     ],
     "screenshots": [],
-    "version": "0.2.1",
-    "updated": "2020-07-31"
+    "version": "0.3.0",
+    "updated": "2021-05-12"
   },
 
   "dependencies": {
-    "grafanaVersion": "7.1.1",
+    "grafanaVersion": "7.5.5",
     "plugins": []
   }
 }

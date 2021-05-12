@@ -1,0 +1,118 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 7,
+  "iteration": 1596200782662,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "html": "<div id=\"observablehq-c9b1aae2\">\r\n  <div class=\"observablehq-viewof-type\"></div>\r\n  <div class=\"observablehq-chart\"></div>\r\n</div>\r\n<script type=\"module\">\r\n  import {Runtime, Inspector} from \"https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js\";\r\n  import define from \"https://api.observablehq.com/@ae3e/commits-per-project.js?v=3\";\r\n  (new Runtime).module(define, name => {\r\n    if (name === \"viewof type\") return Inspector.into(\"#observablehq-c9b1aae2 .observablehq-viewof-type\")();\r\n    if (name === \"chart\") return Inspector.into(\"#observablehq-c9b1aae2 .observablehq-chart\")();\r\n    if (name === \"mutable color\") {\r\n        return {fulfilled: (value) => {\r\n          window.color = value;\r\n        }};\r\n      }\r\n  });\r\n</script>",
+        "script": "console.log(ctxt)\nwindow.color.value = ctxt.replaceVariables('$color')\n//window.updateVariables({query:{'var-color':'toti'}, partial: true})"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "request": {
+            "script": "let dates = data.map(elt=>new Date(elt.week))\r\nlet counts = data.map(elt=>elt.total)\r\nreturn {\r\n        refId: 0,\r\n        fields: [\r\n          { name: 'Week', values: dates, type: 'time' },\r\n          { name: 'Count', values: counts, type: 'number' },\r\n        ]\r\n      }",
+            "url": "https://api.github.com/repos/grafana/grafana/stats/commit_activity"
+          }
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Panel Title",
+      "type": "ae3e-html-panel"
+    }
+  ],
+  "schemaVersion": 25,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "orange",
+          "value": "orange"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "color",
+        "options": [
+          {
+            "selected": false,
+            "text": "red",
+            "value": "red"
+          },
+          {
+            "selected": true,
+            "text": "orange",
+            "value": "orange"
+          },
+          {
+            "selected": false,
+            "text": "darkgreen",
+            "value": "darkgreen"
+          }
+        ],
+        "query": "red,orange,darkgreen",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "ae3e-html-panel (ObservableHQ)",
+  "uid": "UxPPQPRMk",
+  "version": 6
+}
